@@ -10,7 +10,7 @@ print(array)
 
 dict_number_count = {}
 for i in range(SIZE):
-    dict_number_count[array[i]] = 1 if not (array[i] in dict_number_count) else dict_number_count[array[i]] + 1
+    dict_number_count[array[i]] = dict_number_count[array[i]] + 1 if array[i] in dict_number_count else 1
 
 count_max = 0
 for number in dict_number_count:

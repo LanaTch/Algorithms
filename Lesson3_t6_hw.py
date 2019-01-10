@@ -18,7 +18,7 @@ for i in range(SIZE):
     if array[i] > max_in_array:
         max_in_array = array[i]
         pos_max = i
-
+print(max_in_array, min_in_array)
 if abs(pos_min - pos_max) == 1:
     print('между максимумом и минимумом нет элементов')
 else:
