@@ -12,7 +12,7 @@ hex_dict_reverse = {0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '
 
 def sum_hex_func(a, b):
     len_a, len_b = len(a), len(b)
-    (n1, n2) = (a, b) if len_a > len_b else (b, a)
+    (n1, n2) = (a.copy(), b.copy()) if len_a > len_b else (b.copy(), a.copy())
     n1.reverse()
     n2.reverse()
 
@@ -32,28 +32,23 @@ def sum_hex_func(a, b):
 
 def mult_hex_func(a, b):
     len_a, len_b = len(a), len(b)
-    (n1, n2) = (a, b) if len_a > len_b else (b, a)
+    (n1, n2) = (a.copy(), b.copy()) if len_a > len_b else (b.copy(), a.copy())
     n1.reverse()
     n2.reverse()
-    mult_hex_i = []
+    mult_hex_res = deque('0')
     for j in range(len(n2)):
         digit = hex_dict[n2[j]]
+        mult_hex_i = deque()
         transfer = 0
-        mult_hex_i.append(deque())
         for i in range(len(n1)):
             spam = hex_dict[n1[i]] * digit + transfer
             (transfer, spam) = divmod(spam, 16)
-            mult_hex_i[j].appendleft(hex_dict_reverse[spam])
+            mult_hex_i.appendleft(hex_dict_reverse[spam])
         if transfer != 0:
-            mult_hex_i[j].appendleft(hex_dict_reverse[transfer])
-
-    for j in range(1, len(mult_hex_i)):
-        for i in range(1, j + 1):
-            mult_hex_i[j].extend('0')
-
-    mult_hex_res = mult_hex_i[0].copy()
-    for i in range(1, len(mult_hex_i)):
-        mult_hex_res = sum_hex_func(mult_hex_res.copy(), mult_hex_i[i].copy())
+            mult_hex_i.appendleft(hex_dict_reverse[transfer])
+        for _ in range(0, j):
+            mult_hex_i.extend('0')
+        mult_hex_res = sum_hex_func(mult_hex_res, mult_hex_i)
     return mult_hex_res
 
 numbers_hex = deque()
@@ -68,5 +63,5 @@ while i < 3:
         numbers_hex.append(a)
         i += 1
 
-print(f'сумма = {sum_hex_func(numbers_hex[0].copy(), numbers_hex[1].copy())}')
-print(f'произведение = {mult_hex_func(numbers_hex[0].copy(), numbers_hex[1].copy())}')
+print(f'сумма = {sum_hex_func(numbers_hex[0], numbers_hex[1])}')
+print(f'произведение = {mult_hex_func(numbers_hex[0], numbers_hex[1])}')
