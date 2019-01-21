@@ -59,7 +59,7 @@ def mult_hex_func(a, b):
 numbers_hex = deque()
 i = 1
 while i < 3:
-    a = deque(*(input(f'введите {i}-е 16-ричное число: ')).upper().split())
+    a = deque((input(f'введите {i}-е 16-ричное число: ')).upper())
     for digit in a:
         if digit not in '0123456789ABCDEF':
             print('неправильное 16-ричное число. допустимы только цифры и буквы "abcdef"')
