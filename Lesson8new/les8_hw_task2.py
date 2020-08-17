@@ -21,7 +21,6 @@ def dijkstra(graph, start):
 
                 if cost[i] > vertex + cost[start]:
                     cost[i] = vertex + cost[start]
-                    # parents.append(parent[i])
                     parent[i] = start
 
 
@@ -32,8 +31,19 @@ def dijkstra(graph, start):
                 min_cost = cost[i]
                 start = i
 
-    return cost, parents
+    result = [[] for _ in range(length)]
 
+    for i in range(length):
+        if is_visited[i]:
+            result[i].append(i)
+            j = i
+            while parent[j] != -1:
+                result[i].append(parent[j])
+                j = parent[j]
+
+            result[i].reverse()
+
+    return cost, result
 g = [
     [0, 0, 1, 1, 9, 0, 0, 0],
     [0, 0, 9, 4, 0, 0, 5, 0],
@@ -46,7 +56,7 @@ g = [
 ]
 
 s = int(input('От какой вершины идти: '))
-dis, paths = dijkstra(g, s)
-print(f'{dis}\n{paths}')
+cos, paths = dijkstra(g, s)
+print(f'{cos}\n{paths}')
 
 
